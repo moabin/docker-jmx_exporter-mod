@@ -1,5 +1,5 @@
 FROM anapsix/alpine-java:8
-MAINTAINER sscaling <sscaling@users.noreply.github.com>
+MAINTAINER moabin <moabin@gmail.com>
 
 RUN apk update && apk upgrade && apk --update add curl && rm -rf /tmp/* /var/cache/apk/*
 
@@ -11,6 +11,7 @@ RUN curl --insecure -L https://github.com/Yelp/dumb-init/releases/download/v1.2.
 RUN mkdir -p /opt/jmx_exporter
 RUN curl -L https://github.com/moabin/jmx_exporter_mod/raw/master/jmx_prometheus_httpserver/target/$JAR -o /opt/jmx_exporter/$JAR
 COPY start.sh /opt/jmx_exporter/
+RUN chmod +x /opt/jmx_exporter/start.sh
 COPY config.yml /opt/jmx_exporter/
 
 CMD ["usr/local/bin/dumb-init", "/opt/jmx_exporter/start.sh"]
